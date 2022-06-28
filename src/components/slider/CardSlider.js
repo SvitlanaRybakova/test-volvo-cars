@@ -15,12 +15,7 @@ const CardSlider = () => {
     const scrollSize = window.matchMedia('screen and (max-width: 480px)').matches ? MOBILE_SCROLL_SIZE : DESCTOP_SCROLL_SIZE;
 
     const carsFilter = (bodyType) => {
-        if (bodyType === "all") {
-            setFiltred(cars);
-        } else {
-            let newCars = [...cars].filter(item => item.bodyType === bodyType);
-            setFiltred(newCars);
-        }
+        bodyType === "all" ? setFiltred(cars) : setFiltred([...cars].filter(item => item.bodyType === bodyType));
     }
 
     const slideLeft = () => {

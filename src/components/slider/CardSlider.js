@@ -1,19 +1,27 @@
 import React, {useState} from "react";
 import './CardSlider.css'
 import cars from '../../api/cars.json'
-
 import chevronCircledLeft from '../../logo/chevronCircledLeft.svg'
 import chevronCircledRight from '../../logo/chevronCircledRight.svg'
 import chevronSmall from '../../logo/chevronSmall.svg'
-
+import Button from 'react-bootstrap/Button';
 
 const CardSlider = () => {
-    const [carsData, ] = useState(cars);
+    const [filtred, setFiltred] = useState(cars);
 
     const MOBILE_SCROLL_SIZE = 300,
           DESCTOP_SCROLL_SIZE = 1255;
 
     const scrollSize = window.matchMedia('screen and (max-width: 480px)').matches ? MOBILE_SCROLL_SIZE : DESCTOP_SCROLL_SIZE;
+
+    const carsFilter = (bodyType) => {
+        if (bodyType === "all") {
+            setFiltred(cars);
+        } else {
+            let newCars = [...cars].filter(item => item.bodyType === bodyType);
+            setFiltred(newCars);
+        }
+    }
 
     const slideLeft = () => {
         const slider = document.getElementById("slider");
@@ -27,8 +35,22 @@ const CardSlider = () => {
 
     return (
         <div id="main-slider-container">
+            <div className="mb-4">
+                    <Button variant="secondary" size="lg" onClick={() => {carsFilter('all')}}>
+                        All
+                    </Button>{' '}
+                    <Button variant="secondary" size="lg" onClick={() => {carsFilter('sedan')}}>
+                        Sedan
+                    </Button>{' '}
+                    <Button variant="secondary" size="lg" onClick={() => {carsFilter('estate')}}>
+                        Estate
+                    </Button>{' '}
+                    <Button variant="secondary" size="lg" onClick={() => {carsFilter('suv')}}>
+                        SUV
+                    </Button>
+            </div>
             <div id="slider">
-                {carsData && carsData.map((car, id) => {
+                {filtred && filtred.map((car, id) => {
                         return (
                             <div className="slider-card" key={id}>
                                 <div className="slider-card-text-wrapper">
@@ -51,9 +73,9 @@ const CardSlider = () => {
                                         </a>
                                     </div>
                                     <div className="single-link-wrapper">
-                                        <a href="/shop" aria-label="Shop" alt='Shop'>
+                                        <a href="/shop" aria-label="Shop" >
                                             Shop
-                                            <img src={chevronSmall} />
+                                            <img src={chevronSmall} alt='Shop' />
                                         </a>
                                     </div>
                                 </div>
@@ -62,8 +84,8 @@ const CardSlider = () => {
                 })}
           </div>
             <div className="slider-chevrons">
-                <img src={chevronCircledRight} onClick={slideRight} />
-                <img src={chevronCircledLeft} onClick={slideLeft} />
+                <img src={chevronCircledRight} onClick={slideRight} alt='Right icon' />
+                <img src={chevronCircledLeft} onClick={slideLeft} alt='Left icon' />
             </div>
         </div>
         

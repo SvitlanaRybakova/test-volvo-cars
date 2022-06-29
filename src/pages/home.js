@@ -1,5 +1,5 @@
-import React from "react";
-import CardSlider from "../components/slider/CardSlider";
+import React from "react"
+import CardSlider from "../components/slider/CardSlider"
 
 const Home = () => {
     return (
@@ -7,4 +7,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default Home
